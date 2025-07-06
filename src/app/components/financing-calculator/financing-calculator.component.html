@@ -1,0 +1,54 @@
+<form (ngSubmit)="onSubmit()" #calcForm="ngForm" autocomplete="on">
+  <div class="mb-3">
+    <label class="form-label">Tipo de Financiamento</label>
+    <select [(ngModel)]="financingType" name="financingType" required (change)="onTypeChange()" class="form-select">
+      <option value="interno">Interno</option>
+      <option value="externo">Externo</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Nº de Mensalidades</label>
+    <select [(ngModel)]="months" name="months" required class="form-select">
+      <option *ngFor="let m of availableMonths" [value]="m">{{ m }}</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Valor da Viatura</label>
+    <input type="number" [(ngModel)]="carValue" name="carValue" required min="1" class="form-control" placeholder="Ex: 35000" />
+  </div>
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-primary flex-fill">Calcular</button>
+    <button *ngIf="monthlyPayment !== null && !showSave" type="button" class="btn btn-success flex-fill" (click)="showSave = true">Guardar</button>
+  </div>
+</form>
+
+<div *ngIf="showMonthlyPayment" class="result mt-4">
+  <div class="alert alert-info text-center">
+    Prestação Mensal: <strong class="fs-4">{{ monthlyPayment | number:'1.2-2' }}</strong>
+  </div>
+</div>
+
+<div *ngIf="showSave" class="save-section mt-4">
+  <form (ngSubmit)="onSave()" #saveForm="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Nome</label>
+      <input type="text" [(ngModel)]="name" name="name" required class="form-control" placeholder="Seu nome" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Contacto</label>
+      <input type="text" [(ngModel)]="contact" name="contact" required class="form-control" placeholder="Telefone ou email" />
+    </div>
+    <button type="submit" class="btn btn-outline-primary w-100">Confirmar</button>
+  </form>
+</div> 
+
+<div *ngIf="saveSuccess" class="result mt-4">
+  <div class="alert alert-info text-center">
+    <strong class="fs-4">Informação guardada com sucesso!</strong>
+  </div>
+</div>
+<div *ngIf="saveError" class="result mt-4">
+  <div class="alert alert-info text-center">
+    <strong class="fs-4">Erro ao guardar informação.</strong>
+  </div>
+</div>
