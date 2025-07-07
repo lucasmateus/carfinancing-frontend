@@ -74,6 +74,10 @@ export class FinancingCalculatorComponent {
         this.saveSuccess = true;
         this.saveError = false;
         this.modalMessage = res.message;
+        this.name = '';
+        this.contact = '';
+        this.showSave = false;
+        this.showMonthlyPayment = false;
         this.cdr.detectChanges();
       },
       error: () => {
